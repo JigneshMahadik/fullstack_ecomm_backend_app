@@ -56,7 +56,14 @@ const Login = async (req,res)=>{
     if(isPasswordValid){
         // console.log(token);
         // localStorage.set("token",token); 
+        // res.cookie('token', token, {
+        //     httpOnly: true,
+        //     secure: true, // Use 'true' in production for HTTPS
+        //     sameSite: 'Strict',
+        //     maxAge: 3600000 // 1 hour
+        // });
         return res.json({
+            message : "Login Successful",
             token
         })
     }
@@ -68,16 +75,11 @@ const Login = async (req,res)=>{
     }
 }
 
-const getData = (req,res)=>{
-    res.json({
-        message : "jack is here"       
-    })
-}
 
 const authControllers = {
     Signup,
     Login,
-    getData
+    
 }
 
 module.exports = authControllers;
