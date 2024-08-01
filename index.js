@@ -24,7 +24,7 @@ app.use(cors({
     // optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     methods : ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: 'Content-Type,Authorization',
-    credentials: true
+    // credentials: true
 }));
 
 
@@ -41,7 +41,7 @@ app.use(ordersRoutes);
 
 
 
-mongoose.connect("mongodb+srv://jignesh:dUaszhl26B0rpW0f@cluster0.s7hzif4.mongodb.net/")
+mongoose.connect("mongodb+srv://jignesh:dUaszhl26B0rpW0f@cluster0.s7hzif4.mongodb.net")
 // mongoose.connect("mongodb+srv://jignesh:dUaszhl26B0rpW0f@cluster0.s7hzif4.mongodb.net/")
 .then(()=>{ console.log("DB Connection Successful"); })
 .catch((error)=>{ console.log("Error while DB Connection !", error); })
