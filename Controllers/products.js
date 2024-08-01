@@ -2,7 +2,7 @@ const productsModel = require("../Models/products");
 const multer = require("multer");
 const path = require("path");
 
-const uploadDirePath = path.join(__dirname, ".", "filesUploaded");
+const uploadDirePath = path.join(__dirname, "..", "filesUploaded");
 
 const storage = multer.diskStorage({
     destination : (req,file, cb)=>{
@@ -29,7 +29,17 @@ const addProducts = async(req,res)=>{
         }
 
         try{
-            const newProduct = new productsModel(req.body);
+            const newProduct = new productsModel({
+                product_name: req.body.product_name,
+                price: req.body.price,
+                offer: req.body.offer,
+                product_type: req.body.product_type,
+                ratings: req.body.ratings,
+                product_detail: req.body.product_detail,
+                product_image: req.file.path, // Save the path of the uploaded file
+                product_category: req.body.product_category,
+                product_sub_category: req.body.product_sub_category
+            });
             await newProduct.save();
     
             res.json({
