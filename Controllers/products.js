@@ -19,7 +19,7 @@ const upload = multer({
 }).single("product_image");
 
 
-const addProducts = async(req,res)=>{
+const addProducts = (req,res)=>{
     upload(req,res,async(error)=>{
         if(error){
             res.json({
