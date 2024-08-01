@@ -9,8 +9,7 @@ const storage = multer.diskStorage({
         cb(null, uploadDirePath);
     },
     filename : (req,file,cb)=>{
-        // const fileName = file.originalname;
-        const fileName = Date.now() + '-' + file.originalname;
+        const fileName = file.originalname;
         cb(null, fileName);
     }
 });
@@ -20,7 +19,7 @@ const upload = multer({
 }).single("product_image");
 
 
-const addProducts = (req,res)=>{
+const addProducts = async(req,res)=>{
     upload(req,res,async(error)=>{
         if(error){
             res.json({
@@ -30,13 +29,7 @@ const addProducts = (req,res)=>{
         }
 
         try{
-            const filePath = path.join('/filesUploaded', req.file.filename);
-            const newProductData = {
-                ...req.body,
-                product_image: filePath
-            };
-            const newProduct = new productsModel(newProductData);
-            // const newProduct = new productsModel(req.body);
+            const newProduct = new productsModel(req.body);
             await newProduct.save();
     
             res.json({
