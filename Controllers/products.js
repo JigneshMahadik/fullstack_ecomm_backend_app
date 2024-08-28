@@ -2,18 +2,36 @@ const productsModel = require("../Models/products");
 const multer = require("multer");
 const path = require("path");
 
-const uploadDirePath = path.join(__dirname, "..", "filesUploaded");
+require('dotenv').config();
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
-const storage = multer.diskStorage({
-    destination : (req,file, cb)=>{
-        cb(null, uploadDirePath);
-    },
-    filename : (req,file,cb)=>{
-        const fileName = file.originalname;
-        cb(null, fileName);
+// const uploadDirePath = path.join(__dirname, "..", "filesUploaded");
+
+// const storage = multer.diskStorage({
+//     destination : (req,file, cb)=>{
+//         cb(null, uploadDirePath);
+//     },
+//     filename : (req,file,cb)=>{
+//         const fileName = file.originalname;
+//         cb(null, fileName);
+//     }
+// });
+    
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "cloudinary_real_estate", // Folder where images will be stored
+        allowed_formats: ["jpg", "png", "jpeg"]
     }
 });
-    
+
 const upload = multer({
     storage : storage
 }).single("product_image");
